@@ -2,9 +2,6 @@
 
 **GigScroll** is a modern, "Tinder-style" job application platform where users can swipe right to apply for jobs and left to pass. It streamlines the job hunt with instant applications, intelligent match insights, and resume parsing.
 
-![GigScroll Demo](https://via.placeholder.com/800x400?text=GigScroll+Preview+Image) 
-*(Optional: Replace this link with a screenshot of your app)*
-
 ---
 
 ## 🚀 Features
