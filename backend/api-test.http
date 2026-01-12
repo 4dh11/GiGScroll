@@ -1,0 +1,320 @@
+### Health check
+GET http://localhost:3000/api/v1/health
+
+### Register user
+POST http://localhost:3000/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "email": "newuser@gigscroll.com",
+  "password": "test123",
+  "fullName": "New User",
+  "skills": ["Node", "TypeScript"]
+}
+
+### Login user
+POST http://localhost:3000/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@gigscroll.com",
+  "password": "test123"
+}
+
+### Store token (manually copy from login response and paste below)
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkYzc5NWVkNy05ZWJlLTQxNGMtOWFlNy1jMGI0NTRlNmU0MmMiLCJpYXQiOjE3Njc3MTkzMTcsImV4cCI6MTc2ODMyNDExN30.maK3A7hZiiIOG_zYAFESqfyGwlqUjEEw2P9SECyL-w4
+### Get next job (requires token)
+GET http://localhost:3000/api/v1/jobs/next
+Authorization: Bearer {{token}}
+
+### List all jobs
+GET http://localhost:3000/api/v1/jobs
+Authorization: Bearer {{token}}
+
+### Get my profile
+GET http://localhost:3000/api/v1/users/profile
+Authorization: Bearer {{token}}
+
+### Swipe right on a job (replace with real jobId from above)
+POST http://localhost:3000/api/v1/jobs/299870ab-ecf8-4fa4-8cea-fbeb8fa1e8e8/swipe-right
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### Get my applications
+GET http://localhost:3000/api/v1/applications/mine
+Authorization: Bearer {{token}}
+
+### Upload Resume PDF
+POST http://localhost:3000/api/v1/users/upload-resume
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="resume"; filename="test-resume.pdf"
+Content-Type: application/pdf
+
+< C:/Users/notne/Desktop/test-resume.pdf
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Get Profile (to see extracted skills)
+GET http://localhost:3000/api/v1/users/profile
+Authorization: Bearer {{token}}
+
+### Upload Resume (auto-detects some skills)
+POST http://localhost:3000/api/v1/users/upload-resume
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="resume"; filename="test-resume.pdf"
+Content-Type: application/pdf
+
+< C:/Users/notne/Desktop/test-resume.pdf
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Get Profile (see auto-detected skills)
+GET http://localhost:3000/api/v1/users/profile
+Authorization: Bearer {{token}}
+
+### Update Profile - Edit Skills Manually
+PATCH http://localhost:3000/api/v1/users/profile
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "skills": ["JavaScript", "TypeScript", "React", "Node", "Express", "PostgreSQL", "MongoDB", "Docker", "AWS", "Git"]
+}
+
+### Update Profile - Edit Skills and Preferences
+PATCH http://localhost:3000/api/v1/users/profile
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "fullName": "John Doe",
+  "skills": ["JavaScript", "TypeScript", "React", "Node"],
+  "preferences": {
+    "preferredLocations": ["Remote", "Bangalore"],
+    "preferredWorkMode": ["REMOTE", "HYBRID"],
+    "preferredJobTypes": ["FULL_TIME"],
+    "minSalary": 50000
+  }
+}
+
+
+### Upload Resume (auto-detects some skills)
+POST http://localhost:3000/api/v1/users/upload-resume
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="resume"; filename="test-resume.pdf"
+Content-Type: application/pdf
+
+< C:/Users/notne/Desktop/test-resume.pdf
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Get Profile (see auto-detected skills)
+GET http://localhost:3000/api/v1/users/profile
+Authorization: Bearer {{token}}
+
+### Update Profile - Edit Skills Manually
+PATCH http://localhost:3000/api/v1/users/profile
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "skills": ["JavaScript", "TypeScript", "React", "Node", "Express", "PostgreSQL", "MongoDB", "Docker", "AWS", "Git"]
+}
+
+### Update Profile - Edit Skills and Preferences
+PATCH http://localhost:3000/api/v1/users/profile
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "fullName": "John Doe",
+  "skills": ["JavaScript", "TypeScript", "React", "Node"],
+  "preferences": {
+    "preferredLocations": ["Remote", "Bangalore"],
+    "preferredWorkMode": ["REMOTE", "HYBRID"],
+    "preferredJobTypes": ["FULL_TIME"],
+    "minSalary": 50000
+  }
+}
+
+
+
+### Get a job ID to bookmark (from jobs list)
+GET http://localhost:3000/api/v1/jobs
+Authorization: Bearer {{token}}
+
+### Bookmark a job
+POST http://localhost:3000/api/v1/jobs/82b13e44-92c5-47a2-bc9a-560d77d59db9/bookmark
+Authorization: Bearer {{token}}
+
+### Unbookmark a job
+DELETE http://localhost:3000/api/v1/jobs/82b13e44-92c5-47a2-bc9a-560d77d59db9/bookmark
+Authorization: Bearer {{token}}
+
+### Get all bookmarked jobs
+GET http://localhost:3000/api/v1/jobs/bookmarked
+Authorization: Bearer {{token}}
+
+
+
+### Next job (now returns matchScore + reasons)
+GET http://localhost:3000/api/v1/jobs/next
+Authorization: Bearer {{token}}
+
+### Debug match score for a specific job
+GET http://localhost:3000/api/v1/jobs/82b13e44-92c5-47a2-bc9a-560d77d59db9/match-score
+Authorization: Bearer {{token}}
+
+
+
+### Jobs default pagination (page=1, limit=10)
+GET http://localhost:3000/api/v1/jobs
+Authorization: Bearer {{token}}
+
+### Jobs page 1 limit 5
+GET http://localhost:3000/api/v1/jobs?page=1&limit=5
+Authorization: Bearer {{token}}
+
+### Jobs page 2 limit 5
+GET http://localhost:3000/api/v1/jobs?page=2&limit=5
+Authorization: Bearer {{token}}
+
+
+
+### My applications (all)
+GET http://localhost:3000/api/v1/applications/mine
+Authorization: Bearer {{token}}
+
+### My applications filtered (APPLIED)
+GET http://localhost:3000/api/v1/applications/mine?status=APPLIED
+Authorization: Bearer {{token}}
+
+### My applications filtered (UNDER_REVIEW)
+GET http://localhost:3000/api/v1/applications/mine?status=UNDER_REVIEW
+Authorization: Bearer {{token}}
+
+### Update application status (replace APPLICATION_ID)
+PATCH http://localhost:3000/api/v1/applications/APPLICATION_ID/status
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "status": "INTERVIEWING"
+}
+
+
+
+
+
+### Add bookmark
+POST http://localhost:3000/api/v1/bookmarks/82b13e44-92c5-47a2-bc9a-560d77d59db9
+Authorization: Bearer {{token}}
+
+### My bookmarks
+GET http://localhost:3000/api/v1/bookmarks/mine
+Authorization: Bearer {{token}}
+
+### Remove bookmark
+DELETE http://localhost:3000/api/v1/bookmarks/82b13e44-92c5-47a2-bc9a-560d77d59db9
+Authorization: Bearer {{token}}
+
+
+
+
+
+
+
+
+
+### ==============================================
+### TEST 1: RESUME PARSING (The new logic)
+### ==============================================
+
+# ⚠️ NOTE: For file upload in .http files, you must provide an absolute path to a real PDF.
+# If this is too hard to configure, use Postman for this specific test.
+POST http://localhost:3000/api/v1/users/upload-resume
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="resume"; filename="test_resume.pdf"
+Content-Type: application/pdf
+
+< C:/Users/notne/Desktop/test-resume.pdf
+--boundary--
+
+### ==============================================
+### TEST 2: BOOKMARKS (The Fixed System)
+### ==============================================
+
+# 1. Bookmark a Job (Replace :jobId with a real ID from your DB)
+# We swtiched this to use URL params, not body
+@jobIdToBookmark = 82b13e44-92c5-47a2-bc9a-560d77d59db9
+POST http://localhost:3000/api/v1/bookmarks/{{jobIdToBookmark}}
+Authorization: Bearer {{token}}
+
+###
+
+# 2. Get My Bookmarks
+# Should return the job you just added
+GET http://localhost:3000/api/v1/bookmarks
+Authorization: Bearer {{token}}
+
+###
+
+# 3. Remove Bookmark
+DELETE http://localhost:3000/api/v1/bookmarks/{{jobIdToBookmark}}
+Authorization: Bearer {{token}}
+
+### ==============================================
+### TEST 3: APPLICATIONS (Status Checks)
+### ==============================================
+
+# 1. Get My Applications
+GET http://localhost:3000/api/v1/applications/mine
+Authorization: Bearer {{token}}
+
+###
+
+# 2. Test Status Filter (Should return empty if you haven't been accepted yet)
+GET http://localhost:3000/api/v1/applications/mine?status=ACCEPTED
+Authorization: Bearer {{token}}
+
+
+
+
+
+### ==============================================
+### TEST 4: SEED DATA VERIFICATION
+### ==============================================
+
+# 1. Login as the seeded "Dev" user
+# @name login
+POST http://localhost:3000/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "dev@test.com",
+  "password": "password123"
+}
+
+###
+
+# Capture the token automatically from the request above
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzNzAxNDFmMS00YzZjLTQ5MGMtYWEwNy1mOWJmMTQxNjBlYzkiLCJpYXQiOjE3NjgwNjY2ODQsImV4cCI6MTc2ODY3MTQ4NH0.AoC-VnvqjmY3ADSGA8enikctRzgmzaMMNcmgjUB-HZw
+
+# 2. Get All Jobs (Should return 10+ jobs now)
+GET http://localhost:3000/api/v1/jobs
+Authorization: Bearer {{token}}
+
+###
+
+# 3. Get "Next Job" for Swiping (Should return a specific match)
+GET http://localhost:3000/api/v1/jobs/next
+Authorization: Bearer {{token}}
